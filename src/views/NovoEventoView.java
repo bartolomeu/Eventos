@@ -1,9 +1,12 @@
 package views;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.ParseException;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
@@ -15,6 +18,9 @@ import javax.swing.text.MaskFormatter;
 import controllers.NovoEventoController;
 import core.Model;
 import core.View;
+import model.Evento;
+import model.EventoUtil;
+import model.Frequencia;
 
 public class NovoEventoView extends JPanel implements View {
 
@@ -27,7 +33,7 @@ public class NovoEventoView extends JPanel implements View {
 	private JRadioButton radioSemanal;
 	private JRadioButton radioMensal;
 	
-	public NovoEventoView(NovoEventoController novoEventoController) throws ParseException {
+	public NovoEventoView(NovoEventoController novoEventoController) {
 		
 		this.novoEventoController = novoEventoController;
 		
@@ -37,6 +43,8 @@ public class NovoEventoView extends JPanel implements View {
 		makeCampoData();
 		makeCampoFrequencia();
 		makeAlarme();
+		buttonSalvar();
+		makeLimparDados();
 		
 	}
 	
@@ -75,7 +83,7 @@ public class NovoEventoView extends JPanel implements View {
 		
 	}
 	
-	public void makeCampoData() throws ParseException {
+	public void makeCampoData() {
 		
 		//label
 		JLabel label = new JLabel("Data");
@@ -85,10 +93,17 @@ public class NovoEventoView extends JPanel implements View {
 		
 		
 		//campo
-		date = new JFormattedTextField(new MaskFormatter("##/##/####"));
-		date.setBounds(169, 116, 96, 20);
-		add(date);
-		date.setColumns(10);
+		try {
+			
+			date = new JFormattedTextField(new MaskFormatter("##/##/####"));
+			date.setBounds(169, 116, 96, 20);
+			add(date);
+			date.setColumns(10);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 	
 	public void makeCampoFrequencia() {
@@ -129,7 +144,70 @@ public class NovoEventoView extends JPanel implements View {
 		add(checkAlarme);
 	}
 	
+	public void buttonSalvar() {
+		
+		JButton botaoSalvar = new JButton("Salvar");
+		botaoSalvar.setBounds(127, 220, 89, 23);
+		add(botaoSalvar);
+		
+		botaoSalvar.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				Evento evento = new Evento();
+				
+				evento.setDate(EventoUtil.getDateFromString(date.getText()));
+				evento.setDescricaoEvento(textoDescricao.getText());
+				evento.setAlarme(checkAlarme.isSelected() ? true : false);
+				evento.setEmail(textoEmail.getText());
+				
+				if(radioDiario.isSelected())
+					evento.setFrequencia(Frequencia.DIARIO);
+				else if(radioSemanal.isSelected())
+					evento.setFrequencia(Frequencia.SEMANAL);
+				else
+					evento.setFrequencia(Frequencia.MENSAL);
+				
+				novoEventoController.addEvento(evento);
+				
+				limparDados();
+				
+			}
+
+			
+			
+		});
+		
+	}
 	
+	public void makeLimparDados() {
+		
+		JButton botaoLimpar = new JButton("Limpar");
+		botaoLimpar.setBounds(253, 220, 89, 23);
+		add(botaoLimpar);
+		
+		botaoLimpar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				limparDados();
+			}
+		});
+		
+	}
+	
+	public void limparDados() {
+		
+		textoDescricao.setText("");
+		date.setText("");
+		checkAlarme.setSelected(false);
+		textoEmail.setText("");
+		radioDiario.setSelected(true);
+		
+	}
 	
 	@Override
 	public void update(Model model, Object data) {
