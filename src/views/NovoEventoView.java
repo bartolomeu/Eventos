@@ -212,7 +212,11 @@ public class NovoEventoView extends JPanel implements View {
 	@Override
 	public void update(Model model, Object data) {
 		// TODO Auto-generated method stub
-		
+		//add
+		if(data != null) {
+			String notice = (String) data;
+		}
+		//add
 	}
 
 }

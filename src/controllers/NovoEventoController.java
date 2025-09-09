@@ -11,6 +11,12 @@ public class NovoEventoController extends Controller {
 
 	private NovoEventoView novoEventoView;
 	
+	public ListaEventoController listaEventoController;
+	
+	public NovoEventoController(ListaEventoController listaEventoController) {
+		this.listaEventoController = listaEventoController;
+	}
+	
 	public void addEvento(Evento evento) {
 		
 		Object[] metadados = new Object[5];
@@ -30,6 +36,9 @@ public class NovoEventoController extends Controller {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		listaEventoController.addNovaLinha(metadados);
+
 		
 	}
 	

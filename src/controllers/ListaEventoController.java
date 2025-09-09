@@ -6,6 +6,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import core.Controller;
+import model.EventoIO;
 import views.ListaEventoView;
 
 public class ListaEventoController extends Controller{
@@ -16,7 +17,8 @@ public class ListaEventoController extends Controller{
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		
+		tabela = new JTable(getDataColumns(), getNameColumns());
+		listaEventoView = new ListaEventoView(this, tabela);
 	}
 
 	public void addNovaLinha(Object[] values) {
@@ -38,5 +40,38 @@ public class ListaEventoController extends Controller{
 		return nameColumns;
 		
 	}
+	
+	public Vector<Vector<Object>> getDataColumns(){
+		
+		Vector<Vector<Object>> dataColumns = null;
+		
+		try {
+			
+			EventoIO eventoIO = new EventoIO();
+			eventoIO.attach(listaEventoView);
+			dataColumns = eventoIO.getEventos();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dataColumns;
+		
+	}
+	
+	public ListaEventoView getView() {
+		return listaEventoView;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
 	
 }
