@@ -1,15 +1,32 @@
 package model;
 
+import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Evento {
 
+  private int id;
 	private String descricaoEvento;
 	private String email;
 	private Date date;
 	private boolean alarme;
 	private Frequencia frequencia;
+
+  public Evento() {}
+  
+  public Evento( ResultSet rs) {
+		try {
+			this.id = rs.getInt("id");
+			this.date = rs.getDate("data");
+			this.descricaoEvento = rs.getString("descricao");
+			this.frequencia = Frequencia.fromString(rs.getString("frequencia"));
+			this.alarme = rs.getBoolean("alarme");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+	}
 	
 	
 	public String getDescricaoEvento() {

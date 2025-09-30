@@ -1,5 +1,6 @@
 package model;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -18,6 +19,12 @@ public class EventoUtil {
 		
 		return date.getTime();
 		
+	}
+
+  public static String formatDate(Date dt) {
+        SimpleDateFormat formatPattern = new SimpleDateFormat("dd/MM/yyyy");
+        String formatDate = formatPattern.format(dt);
+        return formatDate;
 	}
 
 }

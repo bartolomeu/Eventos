@@ -4,6 +4,7 @@ import java.text.ParseException;
 
 import core.Controller;
 import model.Evento;
+import model.EventoDB;
 import model.EventoIO;
 import views.NovoEventoView;
 
@@ -29,9 +30,10 @@ public class NovoEventoController extends Controller {
 		
 		try {
 			
-			EventoIO eventoIO = new EventoIO();
-			eventoIO.attach(novoEventoView);
-			eventoIO.salvarEvento(evento);
+			// EventoIO eventoData = new EventoIO();
+			EventoDB eventoData = new EventoDB();
+			eventoData.attach(novoEventoView);
+			eventoData.salvarEvento(evento);
 			
 		}catch (Exception e) {
 			e.printStackTrace();

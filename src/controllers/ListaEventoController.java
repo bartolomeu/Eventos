@@ -6,6 +6,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import core.Controller;
+import model.EventoDB;
 import model.EventoIO;
 import views.ListaEventoView;
 
@@ -47,9 +48,10 @@ public class ListaEventoController extends Controller{
 		
 		try {
 			
-			EventoIO eventoIO = new EventoIO();
-			eventoIO.attach(listaEventoView);
-			dataColumns = eventoIO.getEventos();
+			// EventoIO evento = new EventoIO();
+			EventoDB evento = new EventoDB();
+			evento.attach(listaEventoView);
+			dataColumns = evento.getEventos();
 			
 		} catch (Exception e) {
 			e.printStackTrace();

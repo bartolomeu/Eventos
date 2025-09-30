@@ -14,7 +14,7 @@ import core.View;
 
 public class EventoIO implements Model {
 
-	private final static String DIRETORIO  = "/home/lucasrod/eclipse-workspace/Eventos/";
+	private final static String DIRETORIO  = "";
 	private final static String FILE = "eventos.txt";
 	private List<View> views = new ArrayList<>();
 	private String notice;
